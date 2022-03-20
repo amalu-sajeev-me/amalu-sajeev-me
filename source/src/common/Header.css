@@ -1,0 +1,44 @@
+
+header{
+    background-color: transparent;
+    color: rgba(71, 187, 143, 0.979);
+    padding: 2em;
+    position: fixed;
+    width: 100vw;
+    padding-right: 6em;
+}
+
+header::after{
+    content: "";
+    display: block;
+    width: 1px;
+    height: 1px;
+    border: 0px solid white;
+    border-bottom: 1em solid purple;
+    border-right: 3em solid purple;
+    border-left: 3em solid transparent;
+    border-top: 1em solid transparent;
+
+    position: absolute;
+    bottom: 0;
+    right: 0px;
+}
+
+#logo {
+    font-size: x-large;
+    font-weight: bolder;
+    color: darkslateblue;
+}
+
+header>nav{
+    display: block;
+    float: right;
+}
+
+header>nav> a{
+    padding: 0.5em 1em;
+    text-transform: uppercase;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-weight: bold;
+
+}
