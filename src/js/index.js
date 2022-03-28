@@ -12,11 +12,16 @@ import skills from "../db/skills.js";
 
 function fillWithElements(id, data, options) {
   const target = document.getElementById(id);
-  const { className = "empty", html } = options;
+  const defaultOptions = {
+    className: null,
+    html: (val) => val,
+  };
+  Object.assign(defaultOptions, arguments[2]);
+  const { className = "empty", html } = defaultOptions;
   data
     .map((elem) => {
       let div = document.createElement(`div`);
-      div.classList.add(className);
+      className && div.classList.add(className);
       div.classList.add("tiles");
       div.innerHTML = html(elem);
       return div;
@@ -26,13 +31,7 @@ function fillWithElements(id, data, options) {
 
 fillWithElements(`skills`, skills, {
   className: `skill`,
-  html(skill) {
-    return skill.name;
-  },
+  html: (skill) => skill.name,
 });
 
-fillWithElements(`projects`, ["copola"], {
-  html(project) {
-    return project;
-  },
-});
+fillWithElements(`projects`, ["copola"]);
