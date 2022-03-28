@@ -1,0 +1,21 @@
+header{
+    flex-flow: column;
+}
+header>nav{
+    width: 100%;
+    text-align: center;
+}
+nav>a {
+    display: block;
+    width: 100%;
+}
+/* main */
+main > figure{
+    margin: auto;
+}
+
+/* skills */
+
+.skill{
+    flex: 1;
+}

@@ -35,43 +35,38 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <title>Amalu Sajeev | web developer</title>
-    <script src="./src/js/index.js" defer></script>
+    <script src="./src/js/index.js" type="module" defer></script>
+    <link rel="stylesheet" media="screen and (max-width: 600px)" href="./src/style/mobile.css">
     <link rel="stylesheet" href="./src/style/index.css">
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root">
-        <header>
-            <span id="logo">amalusajeev.me</span>
-            <nav>
-                <a href="#about">
-                    About
-                </a>
-                <a href="#pics">
-                    pics
-                </a>
-                <a href="#projects">
-                    projects
-                </a>
-                <a href="#contact">
-                    contact
-                </a>
-            </nav>
-        </header>
-        <div id="about">
-          <section>
-            <figure>
-                <!-- <img src="./src/images/dp2.jpg" alt=""> -->
-            </figure>
-            <figcaption></figcaption>
-          </section>
-          <aside>
-            <h1>Aromal Sajeev</h1>
-            <h2>Student | Web Developer</h2>
-            <blockquote id="code-type">
-            </blockquote>
-          </aside>
+    <header>
+      <div>amalusajeev.me</div>
+      <nav>
+        <a href="#">about</a>
+        <a href="#skills">skills</a>
+        <a href="#">contact</a>
+      </nav>
+    </header>
+    <main>
+      <figure>
+        <img src="./src/images/dp2.jpg" alt="Amalu Sajeev">
+        <!-- <figcaption>
+          Amalu Sajeev
+        </figcaption> -->
+      </figure>
+      <aside>
+        <p>
+          Aromal Sajeev <br/>
+        </p>
+        <span>Student | Web Developer</span>
+        <div id="code">
+          <div class="title-bar">-</div>
         </div>
-    </div>
+      </aside>
+    </main>
+    <div id="skills"></div>
+    <div id="projects"></div>
   </body>
 </html>

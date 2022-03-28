@@ -1,122 +1,129 @@
-/* @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Ubuntu&display=swap'); */
-
 @import url('https://fonts.googleapis.com/css2?family=Crete+Round&family=Pacifico&family=Ubuntu&family=Ubuntu+Mono&display=swap');
-/* 
-font-family: 'Crete Round', serif;
-font-family: 'Pacifico', cursive;
-font-family: 'Ubuntu', sans-serif;
-font-family: 'Ubuntu Mono', monospace; */
+:root{
+    --anchor-font: 'Ubuntu';
+    --logo-font: 'Pacifico';
+}
+
+
+/* universal */
 
 *{
     margin: 0;
     padding: 0;
-    box-sizing: content-box;
-    /* box-sizing: content-box; */
+    box-sizing: border-box;
 }
-
-/* body{} */
 
 a{
     text-decoration: none;
-    color: initial;
+    font-family: var(--anchor-font);
 }
+body{
+    display: flex;
+    flex-flow: column wrap;
+}
+/* header */
 
-img{
-    width: fit-content;
-    max-width: 100%;
-    height: fit-content;
-}
 
 header{
-    /* background-color: rgba(20, 20, 20, 0.795); */
-    background-color: white;
-    color: black;
-    display: block;
-    width: 100vw;
-    position: fixed;
-    top: 0;
-    padding: 2em;
-    padding-right: 8vw;
+    display: flex;
+    flex-flow: row wrap;
+    padding: 2rem;
 }
-#logo{
-    font-family: 'Pacifico';
-    font-size: xx-large;
-    margin: 0;
-    position: absolute;
-    top: calc(50% - 1em);
+header>div{
+    font-family: var(--logo-font);
+    font-size: 2rem;
+    /* transform: translateY(-50%); */
+    color: black;
+}
+header>nav{
+    margin: auto;
+}
+nav>a{
+    color: black;
+    font-size: 1em;
+    text-transform: capitalize;
+    padding: 0.6rem 4rem;
+    position: relative;
 }
 
-header>nav{
-    padding-right: 2em;
-    display: block;
-    width: fit-content;
-    float: right;
-}
-header>nav>a{
-    padding: 1em 2em;
-    color: black;
-    text-transform: capitalize;
-    font-family: 'Ubuntu', sans-serif;
-    font-size: medium;
-}
-section{
-    margin: 2em;
-    padding: 1em;
-}
-#about{
-    position: relative;
-    margin-top: 8em;
+
+/* main  */
+main{
     display: flex;
+    flex-flow: row wrap;
 }
-#about>section{
-    width: 30vw;
+main > figure{
+    margin: auto;
 }
-#about h1{
-    font-family: 'Ubuntu';
-    font-size: 4em;
-    font-weight: bold;
+main img{
+    width: 10em;
+}
+
+main > aside {
+    margin: auto;
+}
+
+
+
+main > aside p{
+    font-size: clamp(2rem, 10vw, 4rem);
+    text-align: center;
+    font-family: var(--anchor-font);
     text-decoration: underline;
 }
-#about h2{
-    letter-spacing: 0.45rem;
+main > aside span{
+    color: green;
+    font-family: var(--anchor-font);
+    font-size: 1rem;
+    letter-spacing: clamp(0.12rem, 1vw, 0.66rem);
 }
-#about figure{
+#code{
+    margin-top: 4em;
+    border: 2px solid black;
+    padding: 1em;
+    height: 6em;
+    font-family: monospace;
+    font-size: 1rem;
+    font-weight: bold;
+    color: gray;
     position: relative;
-    margin: auto;
-    z-index: 2;
-    display: block;
-    background: url("../images/dp2.jpg");
-    background-size: contain;
-    width: clamp(18vw, 18vw, 100%);
-    aspect-ratio: 1/1;
-    border: none;
-    border-left: 0.5em outset black;
-    border-radius: 1em;
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
+    opacity: 0.8;
 }
-#about figures::after{
-    content: "";
-    display: block;
+#code .title-bar{
     position: absolute;
-    z-index: 1;
-    border-left: 3em solid transparent;
-    border-top: 3em solid transparent;
-    border-right: 3em solid green;
-    border-bottom: 3em solid green;
-    top: 0;
+    left: 0;
     right: 0;
-    outline: 2px solid firebrick;
-    transform: rotate(90deg) rotateY(180deg) scaleX(0.6) translateY(-100%);
-}
-#about blockquote{
-    color: rgba(128, 128, 128, 0.671);
-    width: 70%;
-    margin-top: 1em;
-    font-family: 'Ubuntu', sans-serif;
-    font-size: 2.5em;
+    top: 0;
+    height: 1em;
+    background-color: black;
 }
 
-:where(#about) section, aside{
-    width: auto;
+/* skills */
+
+#skills, #projects{
+    margin-top: 4em;
+    padding: 1em;
+    display: flex;
+    flex-flow: row wrap;
+    gap: 2em;
+    position: relative;
+}
+.tiles{
+    text-align: center;
+    border: 2px solid pink;
+    padding: 2em;
+}
+#skills::before{
+    content: "skills";
+    position: absolute;
+    font-size: 2em;
+    font-family: var(--anchor-font);
+    transform: translateY(-100%);
+}
+#projects::before{
+    content: "Projects";
+    position: absolute;
+    font-size: 2em;
+    font-family: var(--anchor-font);
+    transform: translateY(-100%);
 }
