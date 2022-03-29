@@ -167,24 +167,17 @@ address hr:last-child{
 }
 #education .tiles{
     position: relative;
+    padding: 2em;
     border: none;
 }
-#education .tiles:not(:last-child):after{
-    content: "☉";
+.seperator{
+    font-size: 1em;
+    font-weight: bold;
     position: absolute;
-    z-index: 2;
-    left: 50%;
     bottom: 0;
-    transform: translateX(-50%);
-    font-size: xx-large;
-    color: violet;
-}
-#education .tiles:not(:first-child):before{
-    content: "|";
-    font-size: 2em;
-    position: absolute;
     left: 50%;
-    top: 0;
-    transform: translateY(-50%) translateX(-50%);
-    z-index: 1;
+    transform: translateX(-50%) translateY(50%);
+}
+.seperator .line{
+    transform: scale(1.5);
 }

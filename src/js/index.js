@@ -27,6 +27,7 @@ function fillWithElements(id, data, options) {
       return div;
     })
     .forEach((elem) => target.append(elem));
+  return target;
 }
 
 fillWithElements(`skills`, skills, {
@@ -60,6 +61,9 @@ let education = [
   },
 ];
 
+let dob = document.createElement("div");
+dob.classList.add("tiles");
+dob.innerHTML = "May 1998";
 fillWithElements(`education`, education, {
   className: "school",
   html: ({ name, description, course, duration }) => {
@@ -70,6 +74,11 @@ fillWithElements(`education`, education, {
         ${description !== null ? `<br /> ${description}` : ""}
       </div>
       <h5>${course}</h5>
+      <div class='seperator'>
+        <div>☉</div>
+        <div class='line'>|</div>
+        <div>☉</div>
+      </div>
     `;
   },
-});
+}).append(dob);
