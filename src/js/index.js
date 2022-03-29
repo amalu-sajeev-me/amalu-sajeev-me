@@ -35,3 +35,7 @@ fillWithElements(`skills`, skills, {
 });
 
 fillWithElements(`projects`, ["copola"]);
+let links = ["GitHub", "Facebook", "Instagram", "Telegram", "Twitter"];
+fillWithElements(`links`, links, {
+  className: "link",
+});

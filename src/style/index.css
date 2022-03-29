@@ -15,6 +15,7 @@
 
 a{
     text-decoration: none;
+    color: black;
     font-family: var(--anchor-font);
 }
 body{
@@ -100,7 +101,7 @@ main > aside span{
 
 /* skills */
 
-#skills, #projects{
+#skills, #projects, #contact, #links{
     margin-top: 4em;
     padding: 1em;
     display: flex;
@@ -112,6 +113,7 @@ main > aside span{
     text-align: center;
     border: 2px solid pink;
     padding: 2em;
+    flex: 1;
 }
 #skills::before{
     content: "skills";
@@ -126,4 +128,20 @@ main > aside span{
     font-size: 2em;
     font-family: var(--anchor-font);
     transform: translateY(-100%);
+}
+
+/* contact */
+
+#contact::before{
+    content: "Contact";
+    position: absolute;
+    font-size: 2em;
+    font-family: var(--anchor-font);
+    transform: translateY(-100%);
+}
+
+address{
+    padding: 1em;
+    line-height: 2em;
+    font-family: monospace;
 }
