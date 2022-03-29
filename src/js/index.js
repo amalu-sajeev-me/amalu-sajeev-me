@@ -39,3 +39,37 @@ let links = ["GitHub", "Facebook", "Instagram", "Telegram", "Twitter"];
 fillWithElements(`links`, links, {
   className: "link",
 });
+let education = [
+  {
+    name: "MSMHSS Chathinamkulam",
+    description: "10th",
+    course: "SSLC",
+    duration: [null, 2014],
+  },
+  {
+    name: "MSMHSS Chathinamkulam",
+    description: "12th",
+    course: "PlusTwo",
+    duration: [null, 2014],
+  },
+  {
+    name: "ITI Chandanathoppe",
+    description: "Computer Operator & Programming Assistant",
+    course: "COPA",
+    duration: [null, 2018],
+  },
+];
+
+fillWithElements(`education`, education, {
+  className: "school",
+  html: ({ name, description, course, duration }) => {
+    return `
+      <div class='title'>
+      <h4>School/Organization</h4>
+        ${name} 
+        ${description !== null ? `<br /> ${description}` : ""}
+      </div>
+      <h5>${course}</h5>
+    `;
+  },
+});

@@ -11,6 +11,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    user-select: none;
 }
 
 a{
@@ -139,6 +140,13 @@ main > aside span{
     font-family: var(--anchor-font);
     transform: translateY(-100%);
 }
+#education::before{
+    content: "Education";
+    position: absolute;
+    font-size: 2em;
+    font-family: var(--anchor-font);
+    transform: translateY(-100%);
+}
 #location{
     margin: auto;
 }
@@ -149,4 +157,34 @@ address{
 }
 address hr:last-child{
     background-color: green;
+}
+
+/* education */
+
+#education{
+    display: flex;
+    flex-flow: column wrap;
+}
+#education .tiles{
+    position: relative;
+    border: none;
+}
+#education .tiles:not(:last-child):after{
+    content: "☉";
+    position: absolute;
+    z-index: 2;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    font-size: xx-large;
+    color: violet;
+}
+#education .tiles:not(:first-child):before{
+    content: "|";
+    font-size: 2em;
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translateY(-50%) translateX(-50%);
+    z-index: 1;
 }
