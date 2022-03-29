@@ -101,7 +101,7 @@ main > aside span{
 
 /* skills */
 
-#skills, #projects, #contact, #links{
+#skills, #projects, #contact, #links, #location{
     margin-top: 4em;
     padding: 1em;
     display: flex;
@@ -139,9 +139,14 @@ main > aside span{
     font-family: var(--anchor-font);
     transform: translateY(-100%);
 }
-
+#location{
+    margin: auto;
+}
 address{
     padding: 1em;
     line-height: 2em;
     font-family: monospace;
+}
+address hr:last-child{
+    background-color: green;
 }
