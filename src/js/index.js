@@ -74,10 +74,16 @@ dialogRouter.setRoute("html", "<b>this is html5 here, Alas!<b>");
 const resumeRouter = new Router("resume");
 resumeRouter.setRoute(
   "resume",
-  await (async function () {
-    return `
-    <embed type="application/pdf" src="./resume.pdf" >
-  `;
-  })()
+  `<embed type="application/pdf" src="./resume.pdf" >`
 );
 
+window.onload = function (event) {
+  console.log(window.location.hash);
+  let url = window.location.hash.slice(1);
+  let list = Router.routeList;
+  list.forEach((route) => {
+    if (url in route.routes) {
+      console.log(url, "yes");
+    }
+  });
+};

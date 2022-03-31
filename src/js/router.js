@@ -1,6 +1,7 @@
 import { isRequired, makeElement, overwriteDefault } from "./utils/index.js";
 
 class Router {
+  static routeList = [];
   constructor(selector = isRequired("selector"), elements = null) {
     const dialog = makeElement(`dialog`, {
       parentElem: document.body,
@@ -20,6 +21,7 @@ class Router {
         });
       });
     }
+    Router.routeList.push(this);
   }
   addRoute(url = isRequired("url"), data = null) {
     const link = new URL(url).hash.slice(1);
@@ -45,6 +47,9 @@ class Router {
           makeElement("button", {
             html: `close`,
             click: () => close(),
+          }),
+          makeElement("div", {
+            html: routes[path],
           }),
         ],
         attributes: {
