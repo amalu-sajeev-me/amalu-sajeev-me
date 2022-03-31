@@ -69,11 +69,15 @@ fillWithElements(`education`, education, {
 
 const dialogRouter = new Router("dialog");
 dialogRouter.setRoute("html", "<b>this is html5 here, Alas!<b>");
-console.log(dialogRouter);
+// console.log(dialogRouter);
 
 const resumeRouter = new Router("resume");
-resumeRouter.setRoute("resume", function () {
-  return `
-    <object data="resume.pdf" >nope!</object>
+resumeRouter.setRoute(
+  "resume",
+  await (async function () {
+    return `
+    <embed type="application/pdf" src="./resume.pdf" >
   `;
-});
+  })()
+);
+

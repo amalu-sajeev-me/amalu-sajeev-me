@@ -184,11 +184,19 @@ address hr:last-child{
 
 /* Dialog */
 
-#dialog{
+dialog{
     position: fixed;
     width: 100%;
-    height: 60%;
+    height: 100%;
+    overflow: scroll;
     left: 0;
     right: 0;
+    top: 0;
+    bottom: 0;
     padding: 2em;
+}
+embed{
+    border: 2px solid red;
+    width: 100%;
+    height: 100vh;
 }

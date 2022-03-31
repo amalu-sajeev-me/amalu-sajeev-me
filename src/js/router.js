@@ -1,19 +1,21 @@
-import { isRequired } from "./utils/index.js";
+import { isRequired, makeElement, overwriteDefault } from "./utils/index.js";
 
 class Router {
-  constructor(selector = isRequired("selector")) {
-    const dialog = document.createElement("dialog");
-    dialog.setAttribute("id", selector);
-    document.body.append(dialog);
+  constructor(selector = isRequired("selector"), elements = null) {
+    const dialog = makeElement(`dialog`, {
+      parentElem: document.body,
+      attributes: { id: selector },
+    });
+
     this.target = dialog;
     this.routes = {};
-    this.elements = document.querySelectorAll(`.${selector}`);
-    if (this.elements.length > 0) {
+    this.elements = elements || document.querySelectorAll(`a.${selector}`);
+    if (this.elements) {
       this.elements.forEach((element) => {
         this.addRoute(element.href, null);
-        element.addEventListener("click", (event) => {
-          event.preventDefault();
+        overwriteDefault(element, `click`, (event) => {
           const { hash: path } = new URL(event.currentTarget.href);
+          console.log(path);
           this.go(path.slice(1));
         });
       });
@@ -30,26 +32,30 @@ class Router {
     return this;
   }
   go(path) {
+    const self = this;
+    const { target, routes, close } = self;
     if (path in this.routes) {
-      if (this.target.open === true) return false;
-      else this.target.open = true;
-      const wrapper = document.createElement("div");
-      const title = document.createElement("div");
-      const button = document.createElement("button");
-      const body = document.createElement("div");
-      button.textContent = `close`;
-      button.onclick = () => {
-        this.close();
-      };
-      wrapper.setAttribute("id", "dialog_wrapper");
-      wrapper.append(title, body, button);
-      body.innerHTML = this.routes[path];
-      this.target.append(wrapper);
+      if (target.open === true || !routes[path]) return false;
+      else target.open = true;
+
+      const wrapper = makeElement("div", {
+        parentElem: target,
+        children: [
+          makeElement(),
+          makeElement("button", {
+            html: `close`,
+            click: () => close(),
+          }),
+        ],
+        attributes: {
+          id: `dialog_wrapper`,
+        },
+      });
     }
   }
   close() {
     const wrapper = document.getElementById("dialog_wrapper");
-    this.target.close();
+    wrapper.parentElement.close();
     wrapper.remove();
   }
 }
