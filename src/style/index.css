@@ -181,3 +181,14 @@ address hr:last-child{
 .seperator .line{
     transform: scale(1.5);
 }
+
+/* Dialog */
+
+#dialog{
+    position: fixed;
+    width: 100%;
+    height: 60%;
+    left: 0;
+    right: 0;
+    padding: 2em;
+}
