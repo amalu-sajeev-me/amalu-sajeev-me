@@ -1,4 +1,5 @@
 import { fillWithElements } from "./main.js";
+import { Router } from "./router.js";
 import skills from "../db/skills.js";
 import links from "../db/links.js";
 import education from "../db/education.js";
@@ -14,7 +15,13 @@ import education from "../db/education.js";
 })();
 
 fillWithElements(`skills`, skills, {
-  wrapper: ["a", {}],
+  wrapper: [
+    "a",
+    (skill) => ({
+      href: `#${skill.name}`,
+      class: `dialog`,
+    }),
+  ],
   className: `skill`,
   html: (skill) => skill.name,
 });
@@ -59,3 +66,14 @@ fillWithElements(`education`, education, {
     return dob;
   })()
 );
+
+const dialogRouter = new Router("dialog");
+dialogRouter.setRoute("html", "<b>this is html5 here, Alas!<b>");
+console.log(dialogRouter);
+
+const resumeRouter = new Router("resume");
+resumeRouter.setRoute("resume", function () {
+  return `
+    <object data="resume.pdf" >nope!</object>
+  `;
+});
