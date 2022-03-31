@@ -1,4 +1,7 @@
+import { fillWithElements } from "./main.js";
 import skills from "../db/skills.js";
+import links from "../db/links.js";
+import education from "../db/education.js";
 
 (function () {
   let code = document.getElementById("code");
@@ -10,61 +13,28 @@ import skills from "../db/skills.js";
   }
 })();
 
-function fillWithElements(id, data, options) {
-  const target = document.getElementById(id);
-  const defaultOptions = {
-    className: null,
-    html: (val) => val,
-  };
-  Object.assign(defaultOptions, arguments[2]);
-  const { className = "empty", html } = defaultOptions;
-  data
-    .map((elem) => {
-      let div = document.createElement(`div`);
-      className && div.classList.add(className);
-      div.classList.add("tiles");
-      div.innerHTML = html(elem);
-      return div;
-    })
-    .forEach((elem) => target.append(elem));
-  return target;
-}
-
 fillWithElements(`skills`, skills, {
+  wrapper: ["a", {}],
   className: `skill`,
   html: (skill) => skill.name,
 });
 
 fillWithElements(`projects`, ["copola"]);
-let links = ["GitHub", "Facebook", "Instagram", "Telegram", "Twitter"];
+
 fillWithElements(`links`, links, {
   className: "link",
+  wrapper: [
+    "a",
+    (link) => ({
+      href: link.url,
+      target: "blank",
+    }),
+  ],
+  html: (link) => link.name,
 });
-let education = [
-  {
-    name: "MSMHSS Chathinamkulam",
-    description: "10th",
-    course: "SSLC",
-    duration: [null, 2014],
-  },
-  {
-    name: "MSMHSS Chathinamkulam",
-    description: "12th",
-    course: "PlusTwo",
-    duration: [null, 2014],
-  },
-  {
-    name: "ITI Chandanathoppe",
-    description: "Computer Operator & Programming Assistant",
-    course: "COPA",
-    duration: [null, 2018],
-  },
-];
 
-let dob = document.createElement("div");
-dob.classList.add("tiles");
-dob.innerHTML = "May 1998";
 fillWithElements(`education`, education, {
+  wrapper: ["div", (school) => ({})],
   className: "school",
   html: ({ name, description, course, duration }) => {
     return `
@@ -81,4 +51,11 @@ fillWithElements(`education`, education, {
       </div>
     `;
   },
-}).append(dob);
+}).append(
+  (function () {
+    let dob = document.createElement("div");
+    dob.classList.add("tiles");
+    dob.innerHTML = "May 1998";
+    return dob;
+  })()
+);
