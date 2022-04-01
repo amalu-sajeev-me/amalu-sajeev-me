@@ -3,7 +3,8 @@ import { Router } from "./router.js";
 import skills from "../db/skills.js";
 import links from "../db/links.js";
 import education from "../db/education.js";
-import "./utils/HashRouter.js";
+import { makeElement } from "./utils/makeElement.js";
+import { HashRouter } from "./utils/HashRouter.js";
 
 (function () {
   let code = document.getElementById("code");
@@ -82,3 +83,15 @@ resumeRouter.setRoute(
 Router.initialize();
 
 */
+
+HashRouter.initialize();
+let mySkills = new HashRouter("myskills");
+
+const resume = makeElement("embed").addProps({
+  src: "./resume.pdf",
+  type: "application/pdf",
+});
+mySkills
+  .route("html", "HYPER TEXT MARKUP LANGUAGE")
+  .route("css", "CASCADING STYLE SHEETS")
+  .route("resume", resume.outerHTML);

@@ -63,3 +63,6 @@ class HashRouter {
     return this.#routes;
   }
 }
+
+
+export { HashRouter };
