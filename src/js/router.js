@@ -39,24 +39,18 @@ class Router {
     if (path in this.routes) {
       if (target.open === true || !routes[path]) return false;
       else target.open = true;
-
-      const wrapper = makeElement("div", {
+      const titleBar = makeElement("div");
+      const closeButton = makeElement("button", { html: "close" });
+      closeButton.on("click", () => close());
+      const contentBody = makeElement("div", { html: routes[path] });
+      // wrapper
+      makeElement("div", {
         parentElem: target,
-        children: [
-          makeElement(),
-          makeElement("button", {
-            html: `close`,
-            click: () => close(),
-          }),
-          makeElement("div", {
-            html: routes[path],
-          }),
-        ],
-        attributes: {
-          id: `dialog_wrapper`,
-        },
-      });
+        children: [titleBar, closeButton, contentBody],
+      }).addProps("id", "dialog_wrapper");
+      return this;
     }
+    return false;
   }
   close() {
     const wrapper = document.getElementById("dialog_wrapper");
