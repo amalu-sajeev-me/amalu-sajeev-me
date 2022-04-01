@@ -85,7 +85,7 @@ Router.initialize();
 */
 
 HashRouter.initialize();
-let mySkills = new HashRouter("myskills");
+let mySkills = HashRouter.makeNew("my skills");
 
 const resume = makeElement("embed").addProps({
   src: "./resume.pdf",
@@ -94,4 +94,4 @@ const resume = makeElement("embed").addProps({
 mySkills
   .route("html", "HYPER TEXT MARKUP LANGUAGE")
   .route("css", "CASCADING STYLE SHEETS")
-  .route("resume", resume.outerHTML);
+  .route("resume", resume);
