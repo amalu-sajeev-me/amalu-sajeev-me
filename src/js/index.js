@@ -3,6 +3,7 @@ import { Router } from "./router.js";
 import skills from "../db/skills.js";
 import links from "../db/links.js";
 import education from "../db/education.js";
+import "./utils/HashRouter.js";
 
 (function () {
   let code = document.getElementById("code");
@@ -67,9 +68,10 @@ fillWithElements(`education`, education, {
   })()
 );
 
+// Router.initialize();
+/*
 const dialogRouter = new Router("dialog");
 dialogRouter.setRoute("html", "<b>this is html5 here, Alas!<b>");
-// console.log(dialogRouter);
 
 const resumeRouter = new Router("resume");
 resumeRouter.setRoute(
@@ -77,13 +79,6 @@ resumeRouter.setRoute(
   `<embed type="application/pdf" src="./resume.pdf" >`
 );
 
-window.onload = function (event) {
-  console.log(window.location.hash);
-  let url = window.location.hash.slice(1);
-  let list = Router.routeList;
-  list.forEach((route) => {
-    if (url in route.routes) {
-      console.log(url, "yes");
-    }
-  });
-};
+Router.initialize();
+
+*/

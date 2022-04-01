@@ -3,10 +3,15 @@ const isRequired = (param = false) => {
   throw new Error(`${errorMessage} parameter missing.`);
 };
 
-const overwriteDefault = (element, eventType, fn, preventDefault = true) => {
+const overwriteDefault = (
+  element,
+  eventType,
+  fn = null,
+  preventDefault = true
+) => {
   element.addEventListener(eventType, (event) => {
     preventDefault && event.preventDefault();
-    fn(event);
+    if (fn) fn(event);
   });
   return element;
 };

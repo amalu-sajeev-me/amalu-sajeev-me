@@ -2,7 +2,22 @@ import { isRequired, makeElement, overwriteDefault } from "./utils/index.js";
 
 class Router {
   static routeList = [];
+  static initialize() {
+    const goTo = (closePrev = false) => {
+      const hash = window.location.hash.slice(1);
+      const { routeList } = Router;
+      routeList.forEach((router) => {
+        if (hash in router.routes) {
+          if (closePrev) router.close(router.target.id);
+          router.go(hash);
+        }
+      });
+    };
+    window.addEventListener("load", goTo);
+    window.addEventListener("hashchange", goTo);
+  }
   constructor(selector = isRequired("selector"), elements = null) {
+    // Router.initialize();
     const dialog = makeElement(`dialog`, {
       parentElem: document.body,
       attributes: { id: selector },
@@ -41,21 +56,26 @@ class Router {
       else target.open = true;
       const titleBar = makeElement("div");
       const closeButton = makeElement("button", { html: "close" });
-      closeButton.on("click", () => close());
+      closeButton.on("click", () => close(this.target.id));
       const contentBody = makeElement("div", { html: routes[path] });
       // wrapper
       makeElement("div", {
         parentElem: target,
         children: [titleBar, closeButton, contentBody],
-      }).addProps("id", "dialog_wrapper");
+      }).addProps("class", "dialog_wrapper");
       return this;
     }
     return false;
   }
-  close() {
-    const wrapper = document.getElementById("dialog_wrapper");
-    wrapper.parentElement.close();
-    wrapper.remove();
+  close(id = null) {
+    if (id) {
+      const target = document.getElementById(id);
+      if (!target.open) return false;
+      const selector = `#${id} > .dialog_wrapper`;
+      const wrapper = document.querySelector(selector);
+      target.removeChild(wrapper);
+      target.close();
+    }
   }
 }
 

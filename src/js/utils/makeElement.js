@@ -1,7 +1,7 @@
 import { overwriteDefault } from "./index.js";
 
 const defaultOptions = {
-  parentElem: false,
+  parentElem: document.body,
   children: [],
   html: null,
   attributes: {},
@@ -45,6 +45,8 @@ const makeElement = function (
     else for (let prop in props) this.setAttribute(prop, props[prop]);
     return this;
   };
+  // htmlElement.style.color = "yellow";
+  console.log(htmlElement.style.color);
   return htmlElement;
 };
 

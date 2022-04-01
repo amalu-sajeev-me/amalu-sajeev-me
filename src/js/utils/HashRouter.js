@@ -63,15 +63,3 @@ class HashRouter {
     return this.#routes;
   }
 }
-
-HashRouter.initialize();
-let mySkills = new HashRouter("myskills");
-
-const resume = makeElement("embed").addProps({
-  src: "./resume.pdf",
-  type: "application/pdf",
-});
-mySkills
-  .route("html", "HYPER TEXT MARKUP LANGUAGE")
-  .route("css", "CASCADING STYLE SHEETS")
-  .route("resume", resume.outerHTML);
