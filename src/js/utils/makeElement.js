@@ -1,4 +1,4 @@
-import { overwriteDefault } from "./index.js";
+import { onEvent } from "./index.js";
 
 const defaultOptions = {
   parentElem: null,
@@ -35,7 +35,7 @@ const makeElement = function (
   if (click) htmlElement.addEventListener("click", click);
   // helper method for eventListeners
   htmlElement.__proto__.on = function (event = "click", fn) {
-    overwriteDefault(this, event, fn);
+    onEvent(this, event, fn);
     return this;
   };
   // helper method for setting HTMLElement Attributes
@@ -45,8 +45,6 @@ const makeElement = function (
     else for (let prop in props) this.setAttribute(prop, props[prop]);
     return this;
   };
-  // htmlElement.style.color = "yellow";
-  console.log(htmlElement.style.color);
   return htmlElement;
 };
 

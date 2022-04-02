@@ -84,4 +84,9 @@ const resume = makeElement("embed").addProps({
 mySkills
   .route("html", "HYPER TEXT MARKUP LANGUAGE")
   .route("css", "CASCADING STYLE SHEETS")
-  .route("resume", resume);
+  .route("resume", resume)
+  .route("javascript", (maker) => {
+    return maker("b", { html: "this is bold amalu" });
+  });
+
+

@@ -1,6 +1,10 @@
-import { makeElement, overwriteDefault } from "./index.js";
+import { makeElement, onEvent } from "./index.js";
 
-class HashRouter {
+class HashRouter extends EventTarget {
+  static supportedEvents = {
+    newRoute: new CustomEvent("newRoute"),
+    open: new CustomEvent("onopen"),
+  };
   static #targetElemStyles = {
     width: "100vw",
     height: "100vh",
@@ -32,8 +36,8 @@ class HashRouter {
       if (validRouter) validRouter.open(path);
       else HashRouter.close();
     };
-    overwriteDefault(window, "hashchange", showRoute);
-    overwriteDefault(window, "load", showRoute);
+    onEvent(window, "hashchange", showRoute);
+    onEvent(window, "load", showRoute);
   }
 
   static isPathAvailable(path) {
@@ -52,18 +56,34 @@ class HashRouter {
     HashRouter.innerHTML = "";
   }
   #routes = {};
-  constructor(name) {
-    this.name = name;
 
+  // CONSTRUCTOR ====================================>
+
+  constructor(name) {
+    super(name);
+    this.name = name;
     HashRouter.availableRouters.push(this);
   }
 
   route(path, data) {
-    const verifyData = typeof data === "string" || data instanceof HTMLElement;
+    // const verifyData = typeof data === "string" || data instanceof HTMLElement;
+    // if (!verifyData) throw new TypeError("invalid html input data type");
+
+    const verifyData =
+      ["string", "function"].includes(typeof data) ||
+      data instanceof HTMLElement;
     if (!verifyData) throw new TypeError("invalid html input data type");
 
-    const htmlData = data instanceof HTMLElement ? data.outerHTML : data;
+    const htmlData =
+      typeof data === "function"
+        ? data(makeElement) instanceof HTMLElement
+          ? data(makeElement).outerHTML
+          : data(makeElement)
+        : data instanceof HTMLElement
+        ? data.outerHTML
+        : data;
     this.#routes[path] = htmlData;
+    this.dispatchEvent(HashRouter.supportedEvents.newRoute);
     return this;
   }
 
@@ -71,6 +91,7 @@ class HashRouter {
     if (!(path in this.#routes)) throw new Error("unknown route");
     HashRouter.targetElement.innerHTML = this.#routes[path];
     HashRouter.targetElement.open = true;
+    this.dispatchEvent(HashRouter.supportedEvents.open);
     return this;
   }
 
@@ -78,6 +99,5 @@ class HashRouter {
     return this.#routes;
   }
 }
-
 
 export { HashRouter };

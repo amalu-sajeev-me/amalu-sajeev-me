@@ -1,2 +1,2 @@
-export { isRequired, overwriteDefault } from "./utils.js";
+export { isRequired, onEvent } from "./utils.js";
 export { makeElement } from "./makeElement.js";
