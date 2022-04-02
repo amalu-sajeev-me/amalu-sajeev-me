@@ -185,7 +185,7 @@ address hr:last-child{
 /* Dialog */
 
 embed{
-    border: 2px solid red;
-    width: 100%;
+    border: none;
+    width: 100vw;
     height: 100vh;
 }

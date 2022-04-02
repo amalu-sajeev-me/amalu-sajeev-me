@@ -1,6 +1,4 @@
-import skills from "../db/skills.js";
-import links from "../db/links.js";
-import education from "../db/education.js";
+import { connectToDatabase } from "./main.js";
 import { makeElement } from "./utils/makeElement.js";
 import { HashRouter } from "./utils/HashRouter.js";
 
@@ -17,19 +15,20 @@ import { HashRouter } from "./utils/HashRouter.js";
 /**
  * RENDERING HTML ELEMENTS
  */
-
+await connectToDatabase();
+const { skills, projects, education, links } = internalDB.collections;
 const skillsContainer = document.getElementById("skills");
+
 skills.forEach((skill) => {
   const options = { parentElem: skillsContainer, html: skill.name };
   const attributes = { href: `#${skill.name}`, class: `tiles` };
   makeElement("a", options).addProps(attributes);
 });
 
-const projects = ["copola"];
 const projectsContainer = document.getElementById("projects");
-projects.forEach((project) => {
-  const options = { parentElem: projectsContainer, html: project };
-  const attributes = { href: `#${project}`, class: `tiles` };
+projects.forEach(({ name, links }) => {
+  const options = { parentElem: projectsContainer, html: name };
+  const attributes = { href: `${links.website}`, class: `tiles` };
   makeElement("a", options).addProps(attributes);
 });
 
@@ -88,5 +87,3 @@ mySkills
   .route("javascript", (maker) => {
     return maker("b", { html: "this is bold amalu" });
   });
-
-

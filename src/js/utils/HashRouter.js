@@ -14,7 +14,7 @@ class HashRouter extends EventTarget {
     left: "0",
     right: "0",
     border: "none",
-    padding: "1em",
+    padding: "0",
     overflow: "scroll",
   };
 

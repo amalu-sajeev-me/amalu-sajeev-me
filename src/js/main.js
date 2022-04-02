@@ -1,35 +1,13 @@
-function fillWithElements(id, data, options) {
-  const target = document.getElementById(id);
+async function connectToDatabase() {
+  const { origin } = new URL(location.href);
+  const databaseURL = new URL(`${origin}/src/db/db.json`);
+  const internalDatabase = await fetch(databaseURL)
+    .then((response) => response.json())
+    .catch((error) => console.log("database fetch failed\n", error.message));
 
-  const defaultOptions = {
-    wrapper: ["div", {}],
-    className: "empty",
-    html: (val) => val,
-  };
-
-  Object.assign(defaultOptions, options);
-
-  const {
-    wrapper: [htmlElement, props],
-    className,
-    html,
-  } = defaultOptions;
-  data
-    .map((elem, index, elements) => {
-      let div = document.createElement(htmlElement);
-      let attributes = typeof props === "function" ? props(elem) : props;
-      if (Object.entries(attributes).length > 0) {
-        for (let attr in attributes) div.setAttribute(attr, attributes[attr]);
-      }
-      className && div.classList.add(className);
-      div.classList.add("tiles");
-      div.innerHTML = html(elem, elements);
-      return div;
-    })
-    .forEach((elem) => target.append(elem));
-  return target;
+  if (!internalDatabase) return false;
+  globalThis.internalDB = internalDatabase;
+  return internalDatabase;
 }
 
-
-
-export { fillWithElements };
+export { connectToDatabase };
