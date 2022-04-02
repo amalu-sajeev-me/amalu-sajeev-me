@@ -1,0 +1,136 @@
+{
+  "name": "internal data collection",
+  "description": null,
+  "collections": {
+    "skills": [
+      {
+        "name": "html",
+        "description": "hypertext markup language",
+        "category": "frontend"
+      },
+      {
+        "name": "css",
+        "description": "cascading style sheets",
+        "category": "frontend"
+      },
+      {
+        "name": "javascript",
+        "description": "",
+        "category": "frontend"
+      },
+      {
+        "name": "jquery",
+        "description": "javascript library",
+        "category": "frontend"
+      },
+      {
+        "name": "react.js",
+        "description": "",
+        "category": "frontend"
+      },
+      {
+        "name": "nodejs",
+        "description": "server-side javascript",
+        "category": "backend"
+      },
+      {
+        "name": "express",
+        "description": "nodejs framework",
+        "category": "backend"
+      },
+      {
+        "name": "mongodb",
+        "description": "nosql database",
+        "category": "database"
+      }
+    ],
+    "projects": [
+      {
+        "name": "portfolio",
+        "description": "my portfolio website",
+        "links": {
+          "github": "",
+          "website": "https://www.amalusajeev.me"
+        }
+      },
+      {
+        "name": "copola",
+        "description": "",
+        "links": {
+          "github": "",
+          "website": "https://www.copola.in"
+        }
+      }
+    ],
+    "education": [
+      {
+        "name": "School Of Accelerated Learning",
+        "description": "sslc",
+        "course": {
+          "name": "Product Engineering",
+          "description": "Full Stack Developent",
+          "duration": []
+        }
+      },
+      {
+        "name": "Government ITI Chandanathoppe",
+        "description": "Industrial training instituite",
+        "course": {
+          "name": "COPA",
+          "description": "Computer Operator & Programming Assistant",
+          "duration": []
+        }
+      },
+      {
+        "name": "MSMHSS chathinamkulam",
+        "description": "plus two",
+        "course": {
+          "name": "12th",
+          "description": "",
+          "duration": []
+        }
+      },
+      {
+        "name": "MSMHSS chathinamkulam",
+        "description": "sslc",
+        "course": {
+          "name": "10th",
+          "description": "",
+          "duration": []
+        }
+      }
+    ],
+    "links": [
+      {
+        "name": "GitHub",
+        "description": "",
+        "url": "github.com/amalu-sajeev-me"
+      },
+      {
+        "name": "LinkedIn",
+        "description": "",
+        "url": "linkedin.com/in/amalu-sajeev-me"
+      },
+      {
+        "name": "Facebook",
+        "description": "",
+        "url": "facebook.com/amalu.sajeev.me"
+      },
+      {
+        "name": "Instagram",
+        "description": "",
+        "url": "instagram.com/amalu_sajeev"
+      },
+      {
+        "name": "Telegram",
+        "description": "",
+        "url": "t.me/amalu_sajeev_me"
+      },
+      {
+        "name": "Twitter",
+        "description": "",
+        "url": "twitter.com/amalu_sajeev"
+      }
+    ]
+  }
+}
