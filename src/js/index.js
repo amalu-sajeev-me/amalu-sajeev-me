@@ -1,5 +1,3 @@
-import { fillWithElements } from "./main.js";
-import { Router } from "./router.js";
 import skills from "../db/skills.js";
 import links from "../db/links.js";
 import education from "../db/education.js";
@@ -16,73 +14,65 @@ import { HashRouter } from "./utils/HashRouter.js";
   }
 })();
 
-fillWithElements(`skills`, skills, {
-  wrapper: [
-    "a",
-    (skill) => ({
-      href: `#${skill.name}`,
-      class: `dialog`,
-    }),
-  ],
-  className: `skill`,
-  html: (skill) => skill.name,
+/**
+ * RENDERING HTML ELEMENTS
+ */
+
+const skillsContainer = document.getElementById("skills");
+skills.forEach((skill) => {
+  const options = { parentElem: skillsContainer, html: skill.name };
+  const attributes = { href: `#${skill.name}`, class: `tiles` };
+  makeElement("a", options).addProps(attributes);
 });
 
-fillWithElements(`projects`, ["copola"]);
-
-fillWithElements(`links`, links, {
-  className: "link",
-  wrapper: [
-    "a",
-    (link) => ({
-      href: link.url,
-      target: "blank",
-    }),
-  ],
-  html: (link) => link.name,
+const projects = ["copola"];
+const projectsContainer = document.getElementById("projects");
+projects.forEach((project) => {
+  const options = { parentElem: projectsContainer, html: project };
+  const attributes = { href: `#${project}`, class: `tiles` };
+  makeElement("a", options).addProps(attributes);
 });
 
-fillWithElements(`education`, education, {
-  wrapper: ["div", (school) => ({})],
-  className: "school",
-  html: ({ name, description, course, duration }) => {
-    return `
-      <div class='title'>
-      <h4>School/Organization</h4>
-        ${name} 
-        ${description !== null ? `<br /> ${description}` : ""}
-      </div>
-      <h5>${course}</h5>
-      <div class='seperator'>
-        <div>☉</div>
-        <div class='line'>|</div>
-        <div>☉</div>
-      </div>
-    `;
-  },
-}).append(
-  (function () {
-    let dob = document.createElement("div");
-    dob.classList.add("tiles");
-    dob.innerHTML = "May 1998";
-    return dob;
-  })()
-);
+const linksContainer = document.getElementById("links");
 
-// Router.initialize();
-/*
-const dialogRouter = new Router("dialog");
-dialogRouter.setRoute("html", "<b>this is html5 here, Alas!<b>");
+links.forEach((link) => {
+  const options = { parentElem: linksContainer, html: link.name };
+  const attributes = { href: `#${link.url}`, class: `tiles` };
+  makeElement("a", options).addProps(attributes);
+});
 
-const resumeRouter = new Router("resume");
-resumeRouter.setRoute(
-  "resume",
-  `<embed type="application/pdf" src="./resume.pdf" >`
-);
+const educationContainer = document.getElementById("education");
+education.forEach(({ name, description, course, duration }) => {
+  const educationWrapper = makeElement("div", {
+    parentElem: educationContainer,
+  }).addProps("class", "school");
+  educationWrapper.classList.add("tiles");
+  const title = makeElement("div", { parentElem: educationWrapper }).addProps(
+    "class",
+    "title"
+  );
+  const heading = makeElement("h4", {
+    parentElem: title,
+    html: "School/Organization",
+  });
+  const content = makeElement("div", { parentElem: title, html: `${name}` });
+  const subHeading = makeElement("h5", {
+    parentElem: educationWrapper,
+    html: `${course}`,
+  });
+  const seperator = makeElement("div", {
+    parentElem: educationWrapper,
+    html: `<div>☉</div><div class='line'>|</div><div>☉</div>`,
+  });
+});
+makeElement("div", {
+  parentElem: educationContainer,
+  html: "May 1998",
+}).addProps("class", "tiles");
 
-Router.initialize();
-
-*/
+/**
+ * INTERNAL HASH ROUTING
+ */
 
 HashRouter.initialize();
 let mySkills = HashRouter.makeNew("my skills");

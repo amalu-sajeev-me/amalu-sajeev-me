@@ -1,7 +1,7 @@
 import { overwriteDefault } from "./index.js";
 
 const defaultOptions = {
-  parentElem: document.body,
+  parentElem: null,
   children: [],
   html: null,
   attributes: {},

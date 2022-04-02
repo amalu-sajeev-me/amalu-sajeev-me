@@ -7,7 +7,7 @@ class Link {
 
 const links = [
   new Link("GitHub", "github.com/amalu-sajeev-me"),
-  new Link("LinkedIn", "linkedin.com/amalu-sajeev-me"),
+  new Link("LinkedIn", "linkedin.com/in/amalu-sajeev-me"),
   new Link("Facebook", "facebook.com/amalu.sajeev.me"),
   new Link("Instagram", "instagram.com/amalu_sajeev"),
   new Link("Telegram", "t.me/amalu_sajeev_me"),
