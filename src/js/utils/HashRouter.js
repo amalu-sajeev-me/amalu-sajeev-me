@@ -1,10 +1,7 @@
 import { makeElement, onEvent } from "./index.js";
 
 class HashRouter extends EventTarget {
-  static supportedEvents = {
-    newRoute: new CustomEvent("newRoute"),
-    open: new CustomEvent("onopen"),
-  };
+  static supportedEvents = ["route", "open"];
   static #targetElemStyles = {
     width: "100vw",
     height: "100vh",
@@ -20,7 +17,7 @@ class HashRouter extends EventTarget {
 
   static #targetElemOpts = {
     parentElem: document.body,
-    styles: HashRouter.#targetElemStyles,
+    styles: this.#targetElemStyles,
     attributes: { id: "dialog_wrapper" },
   };
 
@@ -32,9 +29,9 @@ class HashRouter extends EventTarget {
     const showRoute = ({ target }) => {
       const { hash } = target.location;
       const path = hash.slice(1);
-      const validRouter = HashRouter.isPathAvailable(path);
+      const validRouter = this.isPathAvailable(path);
       if (validRouter) validRouter.open(path);
-      else HashRouter.close();
+      else this.close();
     };
     onEvent(window, "hashchange", showRoute);
     onEvent(window, "load", showRoute);
@@ -47,13 +44,16 @@ class HashRouter extends EventTarget {
     return false;
   }
 
+  static close() {
+    this.targetElement.close();
+    this.targetElement.innerHTML = "";
+  }
+
   static makeNew(name) {
     return new HashRouter(name);
   }
-
-  static close() {
-    HashRouter.targetElement.close();
-    HashRouter.innerHTML = "";
+  static {
+    this.makeNew.__proto__.initialize = this.initialize.bind(HashRouter);
   }
   #routes = {};
 
@@ -62,13 +62,12 @@ class HashRouter extends EventTarget {
   constructor(name) {
     super(name);
     this.name = name;
+    this.route = this.route.bind(this);
+    this.on = this.addEventListener.bind(this);
     HashRouter.availableRouters.push(this);
   }
 
   route(path, data) {
-    // const verifyData = typeof data === "string" || data instanceof HTMLElement;
-    // if (!verifyData) throw new TypeError("invalid html input data type");
-
     const verifyData =
       ["string", "function"].includes(typeof data) ||
       data instanceof HTMLElement;
@@ -83,7 +82,9 @@ class HashRouter extends EventTarget {
         ? data.outerHTML
         : data;
     this.#routes[path] = htmlData;
-    this.dispatchEvent(HashRouter.supportedEvents.newRoute);
+    const demoEvent = new Event("");
+    const routeEvent = new CustomEvent("route", { detail: { name: "amalu" } });
+    this.dispatchEvent(routeEvent);
     return this;
   }
 
@@ -91,7 +92,12 @@ class HashRouter extends EventTarget {
     if (!(path in this.#routes)) throw new Error("unknown route");
     HashRouter.targetElement.innerHTML = this.#routes[path];
     HashRouter.targetElement.open = true;
-    this.dispatchEvent(HashRouter.supportedEvents.open);
+    const detail = {
+      url: new URL(location.href),
+      router: this.name,
+    };
+    const openEvent = new CustomEvent("open", { detail });
+    this.dispatchEvent(openEvent);
     return this;
   }
 
@@ -100,4 +106,6 @@ class HashRouter extends EventTarget {
   }
 }
 
-export { HashRouter };
+const { makeNew } = HashRouter;
+
+export { makeNew as HashRouter };
