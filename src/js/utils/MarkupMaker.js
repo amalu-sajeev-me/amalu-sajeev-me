@@ -26,6 +26,7 @@ class MarkupMaker {
     if (typeof props === "object")
       for (let prop in props) this.element.setAttribute(prop, props[prop]);
     else this.element.setAttribute(...arguments);
+      return this;
   }
 
   on(event, callBackFn) {

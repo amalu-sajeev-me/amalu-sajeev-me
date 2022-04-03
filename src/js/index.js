@@ -1,6 +1,5 @@
 import { connectToDatabase } from "./main.js";
 import { makeElement } from "./utils/makeElement.js";
-// import { HashRouter } from "./utils/HashRouter.js";
 import { Hash } from "./utils/Hash.js";
 import "./utils/MarkupMaker.js";
 import { MarkupMaker } from "./utils/MarkupMaker.js";
@@ -76,33 +75,20 @@ makeElement("div", {
  * INTERNAL HASH ROUTING
  */
 
-// HashRouter.initialize();
-// let mySkills = HashRouter("my skills");
-
-// const resume = makeElement("embed").addProps({
-//   src: "./resume.pdf",
-//   type: "application/pdf",
-// });
-// mySkills
-//   .route("html", "HYPER TEXT MARKUP LANGUAGE")
-//   .route("css", "CASCADING STYLE SHEETS")
-//   .route("resume", resume)
-//   .route("javascript", (maker) => {
-//     return maker("b", { html: "this is bold amalu" });
-//   });
-
-// mySkills.on("open", (e) => {
-//   console.log("hello there", e.detail);
-// });
-
 Hash.initialize();
 
 const mySkills = new Hash("skills");
-mySkills.route("html", "<b>hypertext markup language</b> yess!")
-  .route("css", new MarkupMaker("div", {children: ["cascading stylesheets"]}).html);
+const resume = new MarkupMaker("embed").addProps({
+  src: "./resume.pdf",
+  type: "application/pdf",
+});
 
-
-console.log(mySkills);
-console.log(Hash.availableRouters);
-// console.log(mySkills);
-// console.log(mySkills);
+mySkills
+  .route("html", "<b>hypertext markup language</b> yess!")
+  .route(
+    "css",
+    new MarkupMaker("div", { children: ["cascading stylesheets"] }).html
+  )
+  .route("resume", resume);
+  
+  
