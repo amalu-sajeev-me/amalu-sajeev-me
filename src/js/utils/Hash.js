@@ -10,7 +10,7 @@ class Hash extends EventTarget {
     left: "0",
     right: "0",
     border: "none",
-    padding: "1em",
+    padding: "0",
     overflow: "scroll",
   };
 
@@ -69,7 +69,9 @@ class Hash extends EventTarget {
   route(path, data) {
     const routeData = this.#parseRouteData(data);
     if (routeData.constructor.name === "Promise")
-      routeData.then(data => this.#routes[path] = this.#parseRouteData(data));
+      routeData.then(
+        (data) => (this.#routes[path] = this.#parseRouteData(data))
+      );
     else this.#routes[path] = this.#parseRouteData(data);
     const routeEvent = new CustomEvent("route", { detail: path });
     this.dispatchEvent(routeEvent);
@@ -78,7 +80,8 @@ class Hash extends EventTarget {
 
   #parseRouteData(data) {
     if (typeof data === "string") return data;
-    if (typeof data === "object" && "template" in data) return this.parseDataFromURL(data["template"]);
+    if (typeof data === "object" && "template" in data)
+      return this.parseDataFromURL(data["template"]);
     if (typeof data === "object" && data instanceof HTMLElement)
       return data.outerHTML;
     if (typeof data === "object" && data instanceof MarkupMaker)

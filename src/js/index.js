@@ -1,8 +1,5 @@
 import { connectToDatabase } from "./main.js";
-import { makeElement } from "./utils/makeElement.js";
-import { Hash } from "./utils/Hash.js";
-import "./utils/MarkupMaker.js";
-import { MarkupMaker } from "./utils/MarkupMaker.js";
+import { Hash, MarkupMaker } from "./utils/index.js";
 
 (function () {
   let code = document.getElementById("code");
@@ -19,57 +16,40 @@ import { MarkupMaker } from "./utils/MarkupMaker.js";
  */
 await connectToDatabase();
 const { skills, projects, education, links } = internalDB.collections;
-const skillsContainer = document.getElementById("skills");
 
-skills.forEach((skill) => {
-  const options = { parentElem: skillsContainer, html: skill.name };
-  const attributes = { href: `#${skill.name}`, class: `tiles` };
-  makeElement("a", options).addProps(attributes);
+const skillsContainer = document.getElementById("skills");
+skills.forEach(({ name }) => {
+  const props = { href: `#${name}`, class: `tiles` };
+  new MarkupMaker("a", { props }, skillsContainer, [name]).html;
 });
 
 const projectsContainer = document.getElementById("projects");
-projects.forEach(({ name, links }) => {
-  const options = { parentElem: projectsContainer, html: name };
-  const attributes = { href: `${links.website}`, class: `tiles` };
-  makeElement("a", options).addProps(attributes);
+projects.forEach(({ name, link }) => {
+  const props = { href: `${links.website}`, class: `tiles` };
+  new MarkupMaker("a", { props }, projectsContainer, [name]).html;
 });
 
 const linksContainer = document.getElementById("links");
-
-links.forEach((link) => {
-  const options = { parentElem: linksContainer, html: link.name };
-  const attributes = { href: `#${link.url}`, class: `tiles` };
-  makeElement("a", options).addProps(attributes);
+links.forEach(({ name, url }) => {
+  const props = { href: `#${url}`, class: `tiles` };
+  new MarkupMaker("a", { props }, linksContainer, [name]).html;
 });
 
 const educationContainer = document.getElementById("education");
 education.forEach(({ name, description, course, duration }) => {
-  const educationWrapper = makeElement("div", {
-    parentElem: educationContainer,
-  }).addProps("class", "school");
-  educationWrapper.classList.add("tiles");
-  const title = makeElement("div", { parentElem: educationWrapper }).addProps(
-    "class",
-    "title"
-  );
-  const heading = makeElement("h4", {
-    parentElem: title,
-    html: "School/Organization",
-  });
-  const content = makeElement("div", { parentElem: title, html: `${name}` });
-  const subHeading = makeElement("h5", {
-    parentElem: educationWrapper,
-    html: `${course}`,
-  });
-  const seperator = makeElement("div", {
-    parentElem: educationWrapper,
-    html: `<div>☉</div><div class='line'>|</div><div>☉</div>`,
-  });
+  const wrapper = new MarkupMaker("div", {}, educationContainer);
+  wrapper.addClass(["school", "tiles"]);
+
+  const title = new MarkupMaker("div", {}, wrapper.html).addClass("title").html;
+  new MarkupMaker("h4", {}, title, ["School/Organization"]).html;
+  new MarkupMaker("div", {}, title, [name]).html;
+  new MarkupMaker("h5", {}, wrapper.html, [course]).html;
+  const seperator = `<div>☉</div><div class='line'>|</div><div>☉</div>`;
+  new MarkupMaker("div", {}, wrapper.html, seperator).html;
 });
-makeElement("div", {
-  parentElem: educationContainer,
-  html: "May 1998",
-}).addProps("class", "tiles");
+
+new MarkupMaker("div", {}, educationContainer, "May 1998").addClass("tiles")
+  .html;
 
 /**
  * INTERNAL HASH ROUTING
@@ -91,5 +71,3 @@ mySkills
   )
   .route("resume", resume)
   .route("contact_page", { template: "/pages/contact.html" });
-  
-  
