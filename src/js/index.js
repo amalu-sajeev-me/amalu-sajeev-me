@@ -89,6 +89,7 @@ mySkills
     "css",
     new MarkupMaker("div", { children: ["cascading stylesheets"] }).html
   )
-  .route("resume", resume);
+  .route("resume", resume)
+  .route("contact_page", { template: "/pages/contact.html" });
   
   
