@@ -121,12 +121,18 @@ class Hash extends EventTarget {
     const Router = new Hash(name);
     const extendedMethods = ["addEventListener", "dispatchEvent"];
     const proxyHandler = {
-      get(target, prop, reciever) {
+      get(target, prop) {
         const property = target[prop];
         if (extendedMethods.includes(prop)) return property.bind(target);
         if (prop in target) return target[prop];
         return false;
-      }
+      },
+      set(target, prop) {
+        throw new Error("Access Denied. Properties are read only");
+      },
+      has(target, prop) {
+        return prop in target || prop in target.availableRoutes;
+      },
     };
     const routerProxy = new Proxy(Router, proxyHandler);
     return routerProxy;
