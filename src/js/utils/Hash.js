@@ -48,12 +48,17 @@ class Hash extends EventTarget {
   }
 
   static initialize() {
+    if (this.isInitialized) throw new Error("Already Initialized");
     document.body.append(this.#targetElement);
     window.addEventListener("load", this.#showPage.bind(this));
     window.addEventListener("hashchange", this.#showPage.bind(this));
+    this.isInitialized = true;
+    return this.isInitialized;
   }
 
-  #routes = {};
+  static isInitialized = false;
+
+  routes = {};
 
   /**
    *
@@ -61,24 +66,25 @@ class Hash extends EventTarget {
    */
 
   constructor(name) {
+    if (!Hash.isInitialized) throw new Error("you must initialize first");
     super(name);
     this.name = name;
     Hash.#availableRouters.push(this);
   }
 
   route(path, data) {
-    const routeData = this.#parseRouteData(data);
+    const routeData = this.parseRouteData(data);
     if (routeData.constructor.name === "Promise")
       routeData.then(
-        (data) => (this.#routes[path] = this.#parseRouteData(data))
+        (data) => (this.routes[path] = this.parseRouteData(data))
       );
-    else this.#routes[path] = this.#parseRouteData(data);
+    else this.routes[path] = this.parseRouteData(data);
     const routeEvent = new CustomEvent("route", { detail: path });
     this.dispatchEvent(routeEvent);
     return this;
   }
 
-  #parseRouteData(data) {
+  parseRouteData(data) {
     if (typeof data === "string") return data;
     if (typeof data === "object" && "template" in data)
       return this.parseDataFromURL(data["template"]);
@@ -87,7 +93,7 @@ class Hash extends EventTarget {
     if (typeof data === "object" && data instanceof MarkupMaker)
       return data.string;
     if (typeof data === "function")
-      return this.#parseRouteData(data(MarkupMaker));
+      return this.parseRouteData(data(MarkupMaker));
     throw new Error("Unknown data !");
   }
 
@@ -100,15 +106,30 @@ class Hash extends EventTarget {
   }
 
   get availableRoutes() {
-    return this.#routes;
+    return this.routes;
   }
 
   open(path) {
     const dialog = Hash.#targetElement;
-    if (path in this.#routes) dialog.innerHTML = this.#routes[path];
+    if (path in this.routes) dialog.innerHTML = this.routes[path];
     if (!dialog.open) dialog.open = true;
     const openEvent = new CustomEvent("open", { detail: path });
     this.dispatchEvent(openEvent);
+  }
+
+  static router(name) {
+    const Router = new Hash(name);
+    const extendedMethods = ["addEventListener", "dispatchEvent"];
+    const proxyHandler = {
+      get(target, prop, reciever) {
+        const property = target[prop];
+        if (extendedMethods.includes(prop)) return property.bind(target);
+        if (prop in target) return target[prop];
+        return false;
+      }
+    };
+    const routerProxy = new Proxy(Router, proxyHandler);
+    return routerProxy;
   }
 }
 
