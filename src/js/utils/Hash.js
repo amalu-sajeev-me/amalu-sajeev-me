@@ -74,11 +74,14 @@ class Hash extends EventTarget {
 
   route(path, data) {
     const routeData = this.parseRouteData(data);
-    if (routeData.constructor.name === "Promise")
-      routeData.then(
-        (data) => (this.routes[path] = this.parseRouteData(data))
-      );
-    else this.routes[path] = this.parseRouteData(data);
+    if (routeData.constructor.name === "Promise") {
+      (async () => { 
+        const currentPath = location.hash.slice(1);
+        const result = await routeData;
+        this.routes[path] = this.parseRouteData(result);
+        if (path === currentPath) this.open(path);
+      })();
+    } else this.routes[path] = this.parseRouteData(data);
     const routeEvent = new CustomEvent("route", { detail: path });
     this.dispatchEvent(routeEvent);
     return this;
@@ -87,7 +90,7 @@ class Hash extends EventTarget {
   parseRouteData(data) {
     if (typeof data === "string") return data;
     if (typeof data === "object" && "template" in data)
-      return this.parseDataFromURL(data["template"]);
+      return this.parseDataFromURL(data);
     if (typeof data === "object" && data instanceof HTMLElement)
       return data.outerHTML;
     if (typeof data === "object" && data instanceof MarkupMaker)
@@ -97,12 +100,13 @@ class Hash extends EventTarget {
     throw new Error("Unknown data !");
   }
 
-  async parseDataFromURL(path) {
-    const url = `${new URL(location.href).origin}/${path}`;
+  async parseDataFromURL({template, element = null}) {
+    const url = `${new URL(location.href).origin}/${template}`;
     const data = await fetch(url).then((res) => res.text());
     const parser = new DOMParser();
-    const doc = parser.parseFromString(data, "text/html");
-    return doc.body;
+    const htmlDocument = parser.parseFromString(data, "text/html");
+    const outputHTML = element ? htmlDocument.querySelector(element) : htmlDocument.body;
+    return outputHTML;
   }
 
   get availableRoutes() {
