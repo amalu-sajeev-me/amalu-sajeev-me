@@ -2,4 +2,6 @@
 
 ![Amalu's GitHub stats](https://github-readme-stats.vercel.app/api?username=amalu-sajeev-me&show_icons=true&include_all_commits=true&count_private=true)
 [![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=amalu-sajeev-me&layout=compact&hide_progress=true)](https://github.com/amalu-sajeev-me)
+[![Amalu's wakatime stats](https://github-readme-stats.vercel.app/api/wakatime?username=amalu-sajeev-me)](https://github.com/amalu-sajeev-me)
+
 [![Readme Card](https://github-readme-stats.vercel.app/api/pin/?username=amalu-sajeev-me&repo=todo-task-manager)](https://github.com/amalu-sajeev-me/todo-task-manager)
